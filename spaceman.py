@@ -15,6 +15,7 @@ def load_word():
     words_list = words_list[0].split(' ') #comment this line out if you use a words.txt file with each word on a new line
     secret_word = random.choice(words_list)
     return secret_word
+print(load_word())
 
 def is_word_guessed(secret_word, letters_guessed):
     '''
