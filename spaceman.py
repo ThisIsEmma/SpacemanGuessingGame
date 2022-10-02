@@ -1,13 +1,9 @@
+from ast import Return
 import random
 
+#SECTION A - GENERATE A WORD RANDOMLY
 def load_word():
-    '''
-    A function that reads a text file of words and randomly selects one to use as the secret word
-        from the list.
 
-    Returns: 
-           string: The secret word to be used in the spaceman guessing game
-    '''
     f = open('words.txt', 'r')
     words_list = f.readlines()
     f.close()
@@ -15,83 +11,71 @@ def load_word():
     words_list = words_list[0].split(' ') #comment this line out if you use a words.txt file with each word on a new line
     secret_word = random.choice(words_list)
     return secret_word
-print(load_word())
-
-def is_word_guessed(secret_word, letters_guessed):
-    '''
-    A function that checks if all the letters of the secret word have been guessed.
-
-    Args:
-        secret_word (string): the random word the user is trying to guess.
-        letters_guessed (list of strings): list of letters that have been guessed so far.
-
-    Returns: 
-        bool: True only if all the letters of secret_word are in letters_guessed, False otherwise
-    '''
-    # TODO: Loop through the letters in the secret_word and check if a letter is not in lettersGuessed
-    pass
-
-def get_guessed_word(secret_word, letters_guessed):
-    '''
-    A function that is used to get a string showing the letters guessed so far in the secret word and underscores for letters that have not been guessed yet.
-
-    Args: 
-        secret_word (string): the random word the user is trying to guess.
-        letters_guessed (list of strings): list of letters that have been guessed so far.
-
-    Returns: 
-        string: letters and underscores.  For letters in the word that the user has guessed correctly, the string should contain the letter at the correct position.  For letters in the word that the user has not yet guessed, shown an _ (underscore) instead.
-    '''
-
-    #TODO: Loop through the letters in secret word and build a string that shows the letters that have been guessed correctly so far that are saved in letters_guessed and underscores for the letters that have not been guessed yet
-
-    pass
+#---------------------------------
 
 
-def is_guess_in_word(guess, secret_word):
-    '''
-    A function to check if the guessed letter is in the secret word
+#RANDOMLY SELECT WORD
 
-    Args:
-        guess (string): The letter the player guessed this round
-        secret_word (string): The secret word
-
-    Returns:
-        bool: True if the guess is in the secret_word, False otherwise
-
-    '''
-    #TODO: check if the letter guess is in the secret word
-
-    pass
-
-
-
-
-def spaceman(secret_word):
-    '''
-    A function that controls the game of spaceman. Will start spaceman in the command line.
-
-    Args:
-      secret_word (string): the secret word to guess.
-
-    '''
-
-
-    #TODO: show the player information about the game according to the project spec
-
-    #TODO: Ask the player to guess one letter per round and check that it is only one letter
-
-    #TODO: Check if the guessed letter is in the secret or not and give the player feedback
-
-    #TODO: show the guessed word so far
-
-    #TODO: check if the game has been won or lost
-
-
-
-
-#Working on pseudocode 
-
-#These function calls that will start the game
 secret_word = load_word()
-spaceman(secret_word)
+
+#---------------------
+
+letters_to_guess = list(secret_word)
+
+#SECTION B - Formatting output with '-' for letters not yet guessed: 
+display = ''
+for characters in letters_to_guess:
+    display += '-'
+display_list = list(display)
+#---------------------------------------
+
+
+
+#SECTION C - Counting occurences of letters in the word to be guessed, so that if there are 2 occurences 
+# in the same word, player doesn't have to guess twice:
+length = len(letters_to_guess)
+
+def countOccurences (letter):
+    letters_to_guess = list(secret_word)
+    return letters_to_guess.count(letter)
+
+#----------------------------------------
+
+
+#Function that takes the guessed letter and adds it in the response array:
+def replace(letter): 
+    counter = 0
+    occurences = countOccurences(letter)
+    while counter < occurences:
+        index = letters_to_guess.index(letter)
+        display_list[index] = letter
+        letters_to_guess[index] = '-'
+        counter += 1
+    return occurences
+
+#SECTION D - MAIN LOGIC OF THE GAME: While loop for the 7 guesses. 
+count = 7 
+score = 0
+print('A word has been selected.')
+print(display_list)
+while count >= 0:
+    if count == 0:
+        print(f'sorry, you are out of guesses!\nThe secret word was "{secret_word}"')
+        break
+    elif(count > 0):    
+        guess = input('Please guess a letter: ')
+        if guess in letters_to_guess:
+            print("Good guess!")
+            replace(guess)
+            increment_score = countOccurences(guess)
+            score += increment_score
+            print(f'score {score}/{len(letters_to_guess)}')
+            if score == len(letters_to_guess):
+                print('CONGRATULATION, you guessed the word!')
+                break
+        else:
+            print(f'{guess} is NOT in the word')
+            print(f'score {score}/{len(letters_to_guess)}')
+    print(display_list)
+    count -= 1
+    print(f'{count} guesses remaing. . .')
