@@ -1,14 +1,14 @@
 from ast import Return
 import random
 
-#GENERATE A WORD RANDOMLY
+#load list of word using part of the startup code 
 def load_word():
 
     f = open('words.txt', 'r')
     words_list = f.readlines()
     f.close()
     
-    words_list = words_list[0].split(' ') #comment this line out if you use a words.txt file with each word on a new line
+    words_list = words_list[0].split(' ')
     secret_word = random.choice(words_list)
     return secret_word
 
@@ -19,7 +19,7 @@ def load_spaceman():
     f.close()
     return spaceman_list
 
-#STRETCH Challenge - print Spaceman with each incorrect guesses 
+#STRETCH Challenge - print a Spaceman ASCI art with each incorrect guesses 
 def print_spaceman(count):
     list = load_spaceman()
     if count == 0:
@@ -150,7 +150,7 @@ while count >= 0 and play == True:
                         play = False
                     break
             else:
-                print(f'\033[1;31;40m {guess} is NOT in the word. {count} guesses remaining. . . \033[0m')
+                print(f'\033[1;31;40m INCORRECT GUESS. {count} guesses remaining. . . \033[0m')
                 print(f'\033[1;37;40m score {score}/{len(letters_to_guess)}\033[0m')
                 print_spaceman(count)
                 count -= 1
