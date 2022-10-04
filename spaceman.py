@@ -1,6 +1,7 @@
 from ast import Return
 import random
 
+#Add Docstring format
 #load list of word using part of the startup code 
 def load_word():
 
@@ -12,6 +13,7 @@ def load_word():
     secret_word = random.choice(words_list)
     return secret_word
 
+#Add Docstring format
 #Read spaceman ASCII art
 def load_spaceman():
     f = open('spaceman.txt', 'r')
@@ -19,31 +21,32 @@ def load_spaceman():
     f.close()
     return spaceman_list
 
+#Add Docstring format
 #STRETCH Challenge - print a Spaceman ASCI art with each incorrect guesses 
 def print_spaceman(count):
     list = load_spaceman()
     if count == 0:
-        print(f"\033[1;37;40m White {list[0:5172]} \033[0m")
+        print(f"\033[1;37;40m {list[0:5172]} \033[0m")
     elif count == 1:
-        print(f"\033[1;37;40m White {list[738:5172]} \033[0m")
+        print(f"\033[1;37;40m {list[738:5172]} \033[0m")
     elif count == 2:
-        print(f"\033[1;37;40m White {list[1477:5172]} \033[0m")
+        print(f"\033[1;37;40m {list[1477:5172]} \033[0m")
     elif count == 3:
-        print(f"\033[1;37;40m White {list[2216:5172]} \033[0m")
+        print(f"\033[1;37;40m {list[2216:5172]} \033[0m")
     elif count == 4:
-        print(f"\033[1;37;40m White {list[2955:5172]} \033[0m")
+        print(f"\033[1;37;40m {list[2955:5172]} \033[0m")
     elif count == 5:
-        print(f"\033[1;37;40m White {list[3694:5172]} \033[0m")
+        print(f"\033[1;37;40m {list[3694:5172]} \033[0m")
     elif count == 6:
-        print(f"\033[1;37;40m White {list[4433:5172]} \033[0m")
+        print(f"\033[1;37;40m {list[4433:5172]} \033[0m")
 
-
+#Add Docstring format
 #RANDOMLY select a word and STORE it as a list 
 secret_word = load_word()
 print(secret_word) 
 letters_to_guess = list(secret_word)
 
-
+#Add Docstring format
 #Placeholder to contain '-' for letters not yet guessed: 
 def generate_placeholder(letters_to_guess):
     display = ''
@@ -61,7 +64,7 @@ def countOccurences (letter):
     return letters_to_guess.count(letter)
 
 
-
+#Add Docstring format
 #Add letter in the placeholder (if letter is part of the secret word):
 def replace(letter, letters_to_guess, placeholder): 
     counter = 0
@@ -91,7 +94,7 @@ def prompt_for_letter():
 
 
 #Main logic of the game: While loop for the 7 guesses. 
-count = 6 
+count = 6
 score = 0
 play = True
 print('A word has been selected.')
@@ -155,3 +158,11 @@ while count >= 0 and play == True:
                 print_spaceman(count)
                 count -= 1
     print(f'\n{placeholder}\n')
+
+
+#TEST FOR GENERATE PLACEHOLDER:
+#1 TEST WITH NUMBERS:
+
+print(generate_placeholder([]))
+print(generate_placeholder(['1','A', '']))
+print(generate_placeholder(['Jam']))
